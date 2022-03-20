@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free Web tutorials">
+    <meta name="keywords" content="HTML,CSS,JavaScript">
+    <meta name="author" content="Roberto Muñoz Garcia">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/8b4390e89f.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title></title>
+</head>
+<style>
+#verde { 
+    background-color: #7FC67F;
+}
+#amarillo { 
+    background-color: #FFFF80;
+}
+#rojo { 
+    background-color: #FF7F7F;
+}
+#azul { 
+    background-color: #799BFF;
+}
+</style>
+<body style="background-color:black">
+
+    <div class="container-fluid">
+        </br>
+        <div class="row text-center">
+            <div class="col-1 col-sm-1 col-md-2 col-lg-3 col-xl-3"></div>
+            <div style="background-color:white" class="jumbotron col-10 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+                <h2>SIMON</h2>
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4 jumbotron" id="verde"></div>
+                    <div class="col-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-3 jumbotron" id="amarillo">
+                        </br>
+                        </br>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="estricto" value="">STRICT</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" id="empezar" class="btn btn-warning">START</button>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8" style="background-color:black; color:white" id="turnoActual">
+                                <h2>0</h2>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>
+                    <div class="col-3 jumbotron" id="rojo">
+                        </br>
+                        </br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4 jumbotron" id="azul"></div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+            <div class="col-1 col-sm-1 col-md-2 col-lg-3 col-xl-3"></div>
+        </div>
+    </div>
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+    <script>
+        var arrayJuego = "";
+var arrayJugador = "";
+var turno = 0;
+
+function rellenarString() {
+    min = Math.ceil(0);
+    max = Math.floor(3);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+function playSound(url) {
+    var audio = document.createElement('audio');
+    audio.style.display = "none";
+    audio.src = url;
+    audio.autoplay = true;
+    audio.onended = function () {
+        audio.remove()
+    };
+    document.body.appendChild(audio);
+}
+
+function activaFicha(num) {
+    clearTimeout();
+    if (num == 0) {
+        window.setTimeout(function () {
+            document.getElementById("verde").style.backgroundColor = "green";
+        }, 500);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"), 1000);
+        window.setTimeout(function () {
+            document.getElementById("verde").style.backgroundColor = "#7FC67F";
+        }, 1500);
+    };
+    if (num == 1) {
+        window.setTimeout(function () {
+            document.getElementById("amarillo").style.backgroundColor = "#ffd800";
+        }, 500);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"), 1000);
+        window.setTimeout(function () {
+            document.getElementById("amarillo").style.backgroundColor = "#FFFF80";
+        }, 1500);
+    };
+    if (num == 2) {
+        window.setTimeout(function () {
+            document.getElementById("rojo").style.backgroundColor = "red";
+        }, 500);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"), 1000);
+        setTimeout(function () {
+            document.getElementById("rojo").style.backgroundColor = "#FF7F7F";
+        }, 1500);
+    };
+    if (num == 3) {
+        window.setTimeout(function () {
+            document.getElementById("azul").style.backgroundColor = "blue";
+        }, 500);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"), 1000);
+        window.setTimeout(function () {
+            document.getElementById("azul").style.backgroundColor = "#799BFF";
+        }, 1500);
+    };
+};
+
+function turnoIA() {
+    turno = turno + 1;
+    document.getElementById("turnoActual").innerHTML = "<h2>" + turno + "</h2>";
+    arrayJuego = arrayJuego + rellenarString()
+    for (var i = 0; i < arrayJuego.length; i = i + 1) {
+        setDelay(i);
+    };
+
+    function setDelay(i) {
+        setTimeout(function () {
+            activaFicha(arrayJuego[i]);
+        }, i * 2000);
+
+    };
+    turnoJugador();
+};
+
+document.getElementById("empezar").onclick = function () {
+    arrayJuego = "";
+    arrayJugador = "";
+    turno = 0;
+    turnoIA();
+};
+
+function turnoJugador() {
+    document.getElementById("verde").onclick = function () {
+        arrayJugador = arrayJugador + 0;
+        window.setTimeout(function () {
+            document.getElementById("verde").style.backgroundColor = "green";
+        }, 0);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"), 500);
+        window.setTimeout(function () {
+            document.getElementById("verde").style.backgroundColor = "#7FC67F";
+        }, 700);
+        comprobarTurno()
+    };
+    document.getElementById("amarillo").onclick = function () {
+        arrayJugador = arrayJugador + 1;
+        window.setTimeout(function () {
+            document.getElementById("amarillo").style.backgroundColor = "#ffd800";
+        }, 0);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"), 500);
+        window.setTimeout(function () {
+            document.getElementById("amarillo").style.backgroundColor = "#FFFF80";
+        }, 700);
+        comprobarTurno()
+    };
+    document.getElementById("rojo").onclick = function () {
+        arrayJugador = arrayJugador + 2;
+        window.setTimeout(function () {
+            document.getElementById("rojo").style.backgroundColor = "red";
+        }, 0);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"), 500);
+        window.setTimeout(function () {
+            document.getElementById("rojo").style.backgroundColor = "#FF7F7F";
+        }, 700);
+        comprobarTurno()
+    };
+    document.getElementById("azul").onclick = function () {
+        arrayJugador = arrayJugador + 3;
+        window.setTimeout(function () {
+            document.getElementById("azul").style.backgroundColor = "blue";
+        }, 0);
+        window.setTimeout(playSound("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"), 500);
+        window.setTimeout(function () {
+            document.getElementById("azul").style.backgroundColor = "#799BFF";
+        }, 700);
+        comprobarTurno()
+    };
+};
+
+function comprobarTurno() {
+    if (arrayJuego.localeCompare(arrayJugador) == 0 && arrayJuego.length == arrayJugador.length && turno == 20) {
+        document.getElementById("turnoActual").innerHTML = "<h2>" + "WIN" + "</h2>";
+    } else
+    if (document.getElementById("estricto").checked == false && arrayJuego.localeCompare(arrayJugador) != 0 && arrayJuego.length == arrayJugador.length && turno < 20) {
+        arrayJugador = "";
+        setTimeout(function () {
+            for (var i = 0; i < arrayJuego.length; i = i + 1) {
+                setDelay(i);
+            };
+
+            function setDelay(i) {
+                setTimeout(function () {
+                    activaFicha(arrayJuego[i]);
+                }, i * 2000);
+            };
+            turnoJugador();
+        }, 1500);
+    } else
+    if (arrayJuego.localeCompare(arrayJugador) == 0 && arrayJuego.length == arrayJugador.length && turno < 20) {
+        arrayJugador = "";
+        setTimeout("turnoIA()", 1500);
+    } else
+    if (document.getElementById("estricto").checked == true && arrayJuego.localeCompare(arrayJugador) != 0 && arrayJuego.length == arrayJugador.length && turno < 20) {
+        arrayJugador = "";
+        arrayJuego = "";
+        turno = 0;
+        document.getElementById("turnoActual").innerHTML = "<h2>" + "0" + "</h2>";
+        setTimeout("turnoIA()", 1500);
+    };
+};
+    </script>
+</body>
+
+</html>
+    
+</body>
+
+</html>
